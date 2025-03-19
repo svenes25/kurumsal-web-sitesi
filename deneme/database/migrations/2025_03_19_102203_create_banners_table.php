@@ -13,14 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('banners', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('resim')->default('default.jpg')->change();
-            $table->string('password');
-            $table->rememberToken();
+            $table->string('baslik')->nullable();
+            $table->string('alt_baslik')->nullable();
+            $table->string('url')->nullable();
+            $table->string('video_url')->nullable();
+            $table->string('resim')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('banners');
     }
 };
