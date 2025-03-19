@@ -50,8 +50,8 @@
     
                                 <div class="form-group mb-3">
                                     <div class="col-xs-12">
-                                        <input class="form-control" type="email" name='email' required="" placeholder="Email">
-                                        <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                                        <input class="form-control" type="password" name='password_confirmation' required="" placeholder="Email">
+                                        <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                                     </div>
                                 </div>
     

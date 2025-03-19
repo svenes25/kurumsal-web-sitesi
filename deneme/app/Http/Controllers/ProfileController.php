@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\User;
 
 class ProfileController extends Controller
 {
@@ -32,9 +33,26 @@ class ProfileController extends Controller
             $request->user()->email_verified_at = null;
         }
 
+        $id= Auth::user()->id;
+        $bilgi= User::find($id);
+        if($request->file('resim'))
+        {
+            $resim = $request->file('resim');
+            $resimadi=date("YmdHi").$resim->getClientOriginalName();
+            $resim->move(public_path("upload/admin"),$resimadi);
+            $bilgi['resim']=$resimadi;
+        }
+        $bilgi->save();
+
+        $mesaj= array(
+            'bildirim' => 'Güncelleme Başarılı',
+            'alert-type' => 'success'
+        );
+
         $request->user()->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('profile.edit')->with('status', 'profile-updated')->
+        with($mesaj);
     }
 
     /**
@@ -55,6 +73,11 @@ class ProfileController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return Redirect::to('/');
+         $mesaj= array(
+            'bildirim' => 'Hesap Kalıcı Olarak Silindi',
+            'alert-type' => 'error'
+        );
+
+        return Redirect::to('/login')->with($mesaj);
     }
 }

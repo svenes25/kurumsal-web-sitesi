@@ -16,6 +16,7 @@
         <link href="{{asset('backend/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
         <!-- App Css-->
         <link href="{{asset('backend/assets/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" >
 
     </head>
 
@@ -35,7 +36,7 @@
                             </div>
                         </div>
     
-                        <h4 class="text-muted text-center font-size-18"><b>G</b></h4>
+                        <h4 class="text-muted text-center font-size-18"><b>Giriş</b></h4>
     
                         <div class="p-3">
                                 <form class="form-horizontal mt-3" method="POST" action="{{ route('login') }}">
@@ -52,15 +53,6 @@
                                     <div class="col-12">
                                         <input id="password" class="form-control" type="password" name="password" placeholder="Password">
                                          <x-input-error :messages="$errors->get('password')" class="mt-2" />
-                                    </div>
-                                </div>
-    
-                                <div class="form-group mb-3 row">
-                                    <div class="col-12">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                            <label class="form-label ms-1" for="customCheck1">Beni Hatırla</label>
-                                        </div>
                                     </div>
                                 </div>
     
@@ -98,6 +90,29 @@
         <script src="{{asset('backend/assets/libs/node-waves/waves.min.js')}}"></script>
 
         <script src="assets/js/app.js"></script>
+                <script>
+            
+           @if(Session::has('bildirim'))
+           var type = "{{ Session::get('alert-type','info') }}"
+           switch(type){
+           case 'info':
+            toastr.info(" {{ Session::get('bildirim') }} ");
+            break;
+
+        case 'success':
+            toastr.success(" {{ Session::get('bildirim') }} ");
+            break;
+
+        case 'warning':
+            toastr.warning(" {{ Session::get('bildirim') }} ");
+            break;
+
+        case 'error':
+            toastr.error(" {{ Session::get('bildirim') }} ");
+            break; 
+        }
+        @endif 
+    </script>
 
     </body>
 </html>
